@@ -20,11 +20,17 @@ namespace Unilevel.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Task_Details> Task_Details { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Area>()
                 .HasMany(e => e.ChiTiet_Distributors)
+                .WithRequired(e => e.Area)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Area>()
+                .HasMany(e => e.Users)
                 .WithRequired(e => e.Area)
                 .WillCascadeOnDelete(false);
 
