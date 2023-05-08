@@ -166,19 +166,22 @@
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="DTO\Area.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="DTO\AreaDTO.cs" />
     <Compile Include="DTO\Distributors.cs" />
     <Compile Include="DTO\Login.cs" />
     <Compile Include="DTO\Notification.cs" />
+    <Compile Include="DTO\Roles.cs" />
     <Compile Include="DTO\Task.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Area.cs" />
-    <Compile Include="Models\ChiTiet_Distributors.cs" />
+    <Compile Include="Models\Area_Details.cs" />
     <Compile Include="Models\Distributor.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\Task_Details.cs" />

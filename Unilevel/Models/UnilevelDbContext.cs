@@ -14,9 +14,10 @@ namespace Unilevel.Models
 
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
-        public virtual DbSet<ChiTiet_Distributors> ChiTiet_Distributors { get; set; }
+        public virtual DbSet<Area_Details> Area_Details { get; set; }
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Task_Details> Task_Details { get; set; }
@@ -25,7 +26,7 @@ namespace Unilevel.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Area>()
-                .HasMany(e => e.ChiTiet_Distributors)
+                .HasMany(e => e.Area_Details)
                 .WithRequired(e => e.Area)
                 .WillCascadeOnDelete(false);
 
@@ -35,13 +36,18 @@ namespace Unilevel.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Distributor>()
-                .HasMany(e => e.ChiTiet_Distributors)
+                .HasMany(e => e.Area_Details)
                 .WithRequired(e => e.Distributor)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Notification>()
                 .Property(e => e.Contents)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Role>()
+                .HasMany(e => e.Users)
+                .WithRequired(e => e.Role)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Task>()
                 .Property(e => e.Description)

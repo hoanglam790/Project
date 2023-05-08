@@ -11,7 +11,7 @@ namespace Unilevel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Distributor()
         {
-            ChiTiet_Distributors = new HashSet<ChiTiet_Distributors>();
+            Area_Details = new HashSet<Area_Details>();
         }
 
         public int DistributorID { get; set; }
@@ -33,6 +33,6 @@ namespace Unilevel.Models
         public string DistributorPhone { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTiet_Distributors> ChiTiet_Distributors { get; set; }
+        public virtual ICollection<Area_Details> Area_Details { get; set; }
     }
 }

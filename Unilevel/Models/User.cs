@@ -9,7 +9,6 @@ namespace Unilevel.Models
     [Table("User")]
     public partial class User
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int UserID { get; set; }
 
         [Required]
@@ -20,9 +19,7 @@ namespace Unilevel.Models
         [StringLength(250)]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(250)]
-        public string Title { get; set; }
+        public int RoleID { get; set; }
 
         public int AreaID { get; set; }
 
@@ -34,5 +31,7 @@ namespace Unilevel.Models
         public string Reporter { get; set; }
 
         public virtual Area Area { get; set; }
+
+        public virtual Role Role { get; set; }
     }
 }

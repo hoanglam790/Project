@@ -103,8 +103,10 @@ namespace Unilevel.Controllers
         public IHttpActionResult Delete(int id)
         {
             if (id <= 0)
+            {
                 return BadRequest("Not a valid service id");
-
+            }
+                
             using (var db = new UnilevelDbContext())
             {
                 var deleteDistributor = db.Distributors
