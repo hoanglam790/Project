@@ -87,3 +87,5 @@ E:\Source\Unilevel\Unilevel\bin\EntityFramework.dll
 E:\Source\Unilevel\Unilevel\bin\EntityFramework.SqlServer.dll
 E:\Source\Unilevel\Unilevel\bin\EntityFramework.xml
 E:\Source\Unilevel\Unilevel\bin\EntityFramework.SqlServer.xml
+E:\Source\Unilevel\Unilevel\bin\Swashbuckle.Core.dll
+E:\Source\Unilevel\Unilevel\bin\WebActivatorEx.dll

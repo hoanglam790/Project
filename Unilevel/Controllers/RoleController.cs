@@ -58,19 +58,24 @@ namespace Unilevel.Controllers
         // POST
         [Route("api/Role")]
         [HttpPost]
-        public IHttpActionResult Post(Roles r)
+        public IHttpActionResult CreateNewRole(Roles r)
         {
+            if(r.RoleName == null)
+            {
+                return BadRequest("Role name is required fields.");
+            }
+
             var role = new Role();
             role.RoleName = r.RoleName;
             dbContext.Roles.Add(role);
             dbContext.SaveChanges();
-            return Json(r);
+            return Ok("New Role has been created successful.");
         }
 
         // PUT
         [Route("api/Role/{id}")]
         [HttpPut]
-        public IHttpActionResult Put(int id, Roles role)
+        public IHttpActionResult UpdateRole(int id, Roles role)
         {
             using (var db = new UnilevelDbContext())
             {
@@ -83,28 +88,31 @@ namespace Unilevel.Controllers
                 }
                 else
                 {
-                    return BadRequest("Role is not exists");
+                    return BadRequest("Role is not exists !!!");
                 }
             }
-            return Ok();
+            return Ok("Role has been updated successful.");
         }
 
         // DELETE
         [Route("api/Role/{id}")]
         [HttpDelete]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult DeleteRole(int id)
         {
-            if (id <= 0)
-            {
-                return BadRequest("Not a valid role id");
-            }
             using (var db = new UnilevelDbContext())
             {
                 var deleteRole = db.Roles.Where(s => s.RoleID == id).FirstOrDefault();
-                db.Roles.Remove(deleteRole);
-                db.SaveChanges();
+                if (deleteRole != null)
+                {
+                    db.Roles.Remove(deleteRole);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return BadRequest("Not a valid role id");
+                }
             }
-            return Ok();
+            return Ok("Role has been deleted successful.");
         }
     }
 }

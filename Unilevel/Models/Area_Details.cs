@@ -18,7 +18,7 @@ namespace Unilevel.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int DistributorID { get; set; }
 
-        public int DistributorQty { get; set; }
+        public int? DistributorQty { get; set; }
 
         public virtual Area Area { get; set; }
 

@@ -19,13 +19,15 @@ namespace Unilevel.Models
         [StringLength(250)]
         public string Email { get; set; }
 
+        [Required]
+        [StringLength(250)]
+        public string Password { get; set; }
+
         public int RoleID { get; set; }
 
         public int AreaID { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Status { get; set; }
+        public int Status { get; set; }
 
         [StringLength(250)]
         public string Reporter { get; set; }

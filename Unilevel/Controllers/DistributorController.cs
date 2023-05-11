@@ -21,14 +21,14 @@ namespace Unilevel.Controllers
             using (var db = new UnilevelDbContext())
             {
                 var listDistributor = (from d in db.Distributors
-                                  select new Distributors()
-                                  {
-                                      Id = d.DistributorID,
-                                      DistributorName = d.DistributorName,
-                                      DistributorAddress = d.DistributorAddress,
-                                      DistributorEmail = d.DistributorEmail,
-                                      DistributorPhone = d.DistributorPhone
-                                  }).ToList();
+                                       select new Distributors()
+                                       {
+                                           Id = d.DistributorID,
+                                           DistributorName = d.DistributorName,
+                                           DistributorAddress = d.DistributorAddress,
+                                           DistributorEmail = d.DistributorEmail,
+                                           DistributorPhone = d.DistributorPhone
+                                       }).ToList();
                 return Json(listDistributor);
             }
         }
@@ -40,17 +40,23 @@ namespace Unilevel.Controllers
         {
             using (var db = new UnilevelDbContext())
             {
-                var distributor = db.Distributors
-                    .Where(s => s.DistributorID == id)
-                    .SingleOrDefault();
+                var listDistributor = (from d in db.Distributors
+                                       select new Distributors()
+                                       {
+                                           Id = d.DistributorID,
+                                           DistributorName = d.DistributorName,
+                                           DistributorAddress = d.DistributorAddress,
+                                           DistributorEmail = d.DistributorEmail,
+                                           DistributorPhone = d.DistributorPhone
+                                       }).Where(s => s.Id == id).FirstOrDefault();
 
-                if(distributor != null)
+                if(listDistributor != null)
                 {
-                    return Json(distributor);
+                    return Json(listDistributor);
                 }
                 else
                 {
-                   return NotFound();
+                    return BadRequest("Distributor is not exists");
                 }
             }
         }
@@ -58,8 +64,25 @@ namespace Unilevel.Controllers
         // POST
         [Route("api/Distributor")]
         [HttpPost]
-        public IHttpActionResult Post(Distributors d)
+        public IHttpActionResult CreateNewDistributor(Distributors d)
         {
+            if(d.DistributorName == null)
+            {
+                return BadRequest("Distributor name is required fields.");
+            }
+            if (d.DistributorAddress == null)
+            {
+                return BadRequest("Distributor address is required fields.");
+            }
+            if (d.DistributorEmail == null)
+            {
+                return BadRequest("Distributor email is required fields.");
+            }
+            if (d.DistributorPhone == null)
+            {
+                return BadRequest("Distributor phone is required fields.");
+            }
+
             var distributor = new Distributor();
             distributor.DistributorName = d.DistributorName;
             distributor.DistributorAddress = d.DistributorAddress;
@@ -67,19 +90,17 @@ namespace Unilevel.Controllers
             distributor.DistributorPhone = d.DistributorPhone;
             dbContext.Distributors.Add(distributor);
             dbContext.SaveChanges();
-            return Json(d);
+            return Ok("New Distributor has been created successful.");
         }
 
         // PUT
-        [Route("api/Distributor")]
+        [Route("api/Distributor/{id}")]
         [HttpPut]
-        public IHttpActionResult Put(Distributors d)
+        public IHttpActionResult UpdateDistributor(int id, Distributors d)
         {
             using (var db = new UnilevelDbContext())
             {
-                var editDistributor = db.Distributors
-                    .Where(s => s.DistributorID == d.Id)
-                    .FirstOrDefault();
+                var editDistributor = db.Distributors.Where(s => s.DistributorID == id).FirstOrDefault();
 
                 if (editDistributor != null)
                 {
@@ -91,32 +112,31 @@ namespace Unilevel.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return BadRequest("Distributor is not exists !!!");
                 }
             }
-            return Json(d);
+            return Ok("Distributor has been updated successful.");
         }
 
         // DELETE
         [Route("api/Distributor")]
         [HttpDelete]
-        public IHttpActionResult Delete(int id)
-        {
-            if (id <= 0)
-            {
-                return BadRequest("Not a valid service id");
-            }
-                
+        public IHttpActionResult DeleteDistributor(int id)
+        {                           
             using (var db = new UnilevelDbContext())
             {
-                var deleteDistributor = db.Distributors
-                    .Where(s => s.DistributorID == id)
-                    .FirstOrDefault();
-
-                db.Distributors.Remove(deleteDistributor);
-                db.SaveChanges();
+                var deleteDistributor = db.Distributors.Where(s => s.DistributorID == id).FirstOrDefault();
+                if (deleteDistributor != null)
+                {
+                    db.Distributors.Remove(deleteDistributor);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return BadRequest("Not a valid distributor id");
+                }
             }
-            return Ok();
+            return Ok("Distributor has been deleted successful.");
         }
     }
 }

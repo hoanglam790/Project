@@ -20,13 +20,11 @@ namespace Unilevel.Controllers
             using (var db = new UnilevelDbContext())
             {
                 var listArea = (from a in db.Areas
-                                //join c in db.Area_Details on a.AreaID equals c.AreaID
                                 select new AreaDTO()
                                 {
                                     Id = a.AreaID,
                                     AreaCode = a.AreaCode,
                                     AreaName = a.AreaName,
-                                    //DistributorQty = c.DistributorQty
                                 }).ToList();
                 return Json(listArea);
             }
@@ -46,7 +44,7 @@ namespace Unilevel.Controllers
                                     Id = a.AreaID,
                                     AreaCode = a.AreaCode,
                                     AreaName = a.AreaName,
-                                    //DistributorQty = c.DistributorQty
+                                    //DistributorQty = c.DistributorID
                                 }).Where(a => a.Id == id).FirstOrDefault();
                 if (listArea != null)
                 {
@@ -62,20 +60,29 @@ namespace Unilevel.Controllers
         //POST
         [Route("api/Area")]
         [HttpPost]
-        public IHttpActionResult Post(AreaDTO area)
+        public IHttpActionResult CreateNewArea(AreaDTO area)
         {
+            if(area.AreaCode == null)
+            {
+                return BadRequest("Area code is required fields.");
+            }
+            if(area.AreaName == null)
+            {
+                return BadRequest("Area name is required fields.");
+            }
+
             var addArea = new Area();
             addArea.AreaCode = area.AreaCode;
             addArea.AreaName = area.AreaName;
             dbContext.Areas.Add(addArea);
             dbContext.SaveChanges();
-            return Json(area);
+            return Ok("New Area has been created successful.");
         }
 
         // PUT
         [Route("api/Area/{id}")]
         [HttpPut]
-        public IHttpActionResult Put(int id, AreaDTO area)
+        public IHttpActionResult UpdateArea(int id, AreaDTO area)
         {
             using (var db = new UnilevelDbContext())
             {
@@ -89,28 +96,31 @@ namespace Unilevel.Controllers
                 }
                 else
                 {
-                    return BadRequest("Area is not exists");
+                    return BadRequest("Area is not exists !!!");
                 }
             }
-            return Ok();
+            return Ok("Area has been updated successful.");
         }
 
         // DELETE
         [Route("api/Area/{id}")]
         [HttpDelete]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult DeleteArea(int id)
         {
             using (var db = new UnilevelDbContext())
             {
-                if(id <= 0)
+                var deleteArea = db.Areas.Where(a => a.AreaID == id).FirstOrDefault();
+                if (deleteArea != null)
+                {
+                    db.Areas.Remove(deleteArea);
+                    db.SaveChanges();
+                }
+                else
                 {
                     return BadRequest("Not a valid area id");
                 }
-
-                var deleteArea = db.Areas.Where(a => a.AreaID == id).FirstOrDefault();
-                db.Areas.Remove(deleteArea);
             }
-            return Ok();
+            return Ok("Area has been deleted successful.");
         }
     }
 
