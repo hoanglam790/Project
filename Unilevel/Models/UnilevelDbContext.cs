@@ -17,10 +17,12 @@ namespace Unilevel.Models
         public virtual DbSet<Area_Details> Area_Details { get; set; }
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<Plan> Plans { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Task_Details> Task_Details { get; set; }
+        public virtual DbSet<Time> Times { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -37,6 +39,11 @@ namespace Unilevel.Models
 
             modelBuilder.Entity<Distributor>()
                 .HasMany(e => e.Area_Details)
+                .WithRequired(e => e.Distributor)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Distributor>()
+                .HasMany(e => e.Plans)
                 .WithRequired(e => e.Distributor)
                 .WillCascadeOnDelete(false);
 
@@ -65,6 +72,11 @@ namespace Unilevel.Models
             modelBuilder.Entity<Task_Details>()
                 .Property(e => e.Comment)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Time>()
+                .HasMany(e => e.Plans)
+                .WithRequired(e => e.Time)
+                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Unilevel.Models
         public Distributor()
         {
             Area_Details = new HashSet<Area_Details>();
+            Plans = new HashSet<Plan>();
         }
 
         public int DistributorID { get; set; }
@@ -34,5 +35,8 @@ namespace Unilevel.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Area_Details> Area_Details { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Plan> Plans { get; set; }
     }
 }

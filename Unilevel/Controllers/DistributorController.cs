@@ -18,19 +18,16 @@ namespace Unilevel.Controllers
         [HttpGet]
         public IHttpActionResult GetAllDistributor()
         {
-            using (var db = new UnilevelDbContext())
-            {
-                var listDistributor = (from d in db.Distributors
-                                       select new Distributors()
-                                       {
-                                           Id = d.DistributorID,
-                                           DistributorName = d.DistributorName,
-                                           DistributorAddress = d.DistributorAddress,
-                                           DistributorEmail = d.DistributorEmail,
-                                           DistributorPhone = d.DistributorPhone
-                                       }).ToList();
-                return Json(listDistributor);
-            }
+            var listDistributor = (from d in dbContext.Distributors
+                                   select new Distributors()
+                                   {
+                                       Id = d.DistributorID,
+                                       DistributorName = d.DistributorName,
+                                       DistributorAddress = d.DistributorAddress,
+                                       DistributorEmail = d.DistributorEmail,
+                                       DistributorPhone = d.DistributorPhone
+                                   }).ToList();
+            return Json(listDistributor);
         }
 
         //GET
@@ -38,26 +35,23 @@ namespace Unilevel.Controllers
         [HttpGet]
         public IHttpActionResult GetById(int id)
         {
-            using (var db = new UnilevelDbContext())
-            {
-                var listDistributor = (from d in db.Distributors
-                                       select new Distributors()
-                                       {
-                                           Id = d.DistributorID,
-                                           DistributorName = d.DistributorName,
-                                           DistributorAddress = d.DistributorAddress,
-                                           DistributorEmail = d.DistributorEmail,
-                                           DistributorPhone = d.DistributorPhone
-                                       }).Where(s => s.Id == id).FirstOrDefault();
+            var listDistributor = (from d in dbContext.Distributors
+                                   select new Distributors()
+                                   {
+                                       Id = d.DistributorID,
+                                       DistributorName = d.DistributorName,
+                                       DistributorAddress = d.DistributorAddress,
+                                       DistributorEmail = d.DistributorEmail,
+                                       DistributorPhone = d.DistributorPhone
+                                   }).Where(s => s.Id == id).FirstOrDefault();
 
-                if(listDistributor != null)
-                {
-                    return Json(listDistributor);
-                }
-                else
-                {
-                    return BadRequest("Distributor is not exists");
-                }
+            if (listDistributor != null)
+            {
+                return Json(listDistributor);
+            }
+            else
+            {
+                return BadRequest("Distributor is not exists");
             }
         }
 
@@ -98,23 +92,21 @@ namespace Unilevel.Controllers
         [HttpPut]
         public IHttpActionResult UpdateDistributor(int id, Distributors d)
         {
-            using (var db = new UnilevelDbContext())
-            {
-                var editDistributor = db.Distributors.Where(s => s.DistributorID == id).FirstOrDefault();
+            var editDistributor = dbContext.Distributors.Where(s => s.DistributorID == id).FirstOrDefault();
 
-                if (editDistributor != null)
-                {
-                    editDistributor.DistributorName = d.DistributorName;
-                    editDistributor.DistributorAddress = d.DistributorAddress;
-                    editDistributor.DistributorEmail = d.DistributorEmail;
-                    editDistributor.DistributorPhone = d.DistributorPhone;
-                    db.SaveChanges();
-                }
-                else
-                {
-                    return BadRequest("Distributor is not exists !!!");
-                }
+            if (editDistributor != null)
+            {
+                editDistributor.DistributorName = d.DistributorName;
+                editDistributor.DistributorAddress = d.DistributorAddress;
+                editDistributor.DistributorEmail = d.DistributorEmail;
+                editDistributor.DistributorPhone = d.DistributorPhone;
+                dbContext.SaveChanges();
             }
+            else
+            {
+                return BadRequest("Distributor is not exists !!!");
+            }
+
             return Ok("Distributor has been updated successful.");
         }
 
@@ -122,20 +114,18 @@ namespace Unilevel.Controllers
         [Route("api/Distributor")]
         [HttpDelete]
         public IHttpActionResult DeleteDistributor(int id)
-        {                           
-            using (var db = new UnilevelDbContext())
+        {
+            var deleteDistributor = dbContext.Distributors.Where(s => s.DistributorID == id).FirstOrDefault();
+            if (deleteDistributor != null)
             {
-                var deleteDistributor = db.Distributors.Where(s => s.DistributorID == id).FirstOrDefault();
-                if (deleteDistributor != null)
-                {
-                    db.Distributors.Remove(deleteDistributor);
-                    db.SaveChanges();
-                }
-                else
-                {
-                    return BadRequest("Not a valid distributor id");
-                }
+                dbContext.Distributors.Remove(deleteDistributor);
+                dbContext.SaveChanges();
             }
+            else
+            {
+                return BadRequest("Not a valid distributor id");
+            }
+
             return Ok("Distributor has been deleted successful.");
         }
     }

@@ -12,22 +12,20 @@ namespace Unilevel.Controllers
     public class AreaController : ApiController
     {
         UnilevelDbContext dbContext = new UnilevelDbContext();
+
         //GET
         [Route("api/Area")]
         [HttpGet]
         public IHttpActionResult GetAllArea()
         {
-            using (var db = new UnilevelDbContext())
-            {
-                var listArea = (from a in db.Areas
-                                select new AreaDTO()
-                                {
-                                    Id = a.AreaID,
-                                    AreaCode = a.AreaCode,
-                                    AreaName = a.AreaName,
-                                }).ToList();
-                return Json(listArea);
-            }
+            var listArea = (from a in dbContext.Areas
+                            select new AreaDTO()
+                            {
+                                Id = a.AreaID,
+                                AreaCode = a.AreaCode,
+                                AreaName = a.AreaName,
+                            }).ToList();
+            return Json(listArea);
         }
 
         //GET
@@ -35,25 +33,22 @@ namespace Unilevel.Controllers
         [HttpGet]
         public IHttpActionResult GetAreaByID(int id)
         {
-            using (var db = new UnilevelDbContext())
-            {
-                var listArea = (from a in db.Areas
+            var listArea = (from a in dbContext.Areas
                                 //join c in db.Area_Details on a.AreaID equals c.AreaID
-                                select new AreaDTO()
-                                {
-                                    Id = a.AreaID,
-                                    AreaCode = a.AreaCode,
-                                    AreaName = a.AreaName,
-                                    //DistributorQty = c.DistributorID
-                                }).Where(a => a.Id == id).FirstOrDefault();
-                if (listArea != null)
-                {
-                    return Json(listArea);
-                }
-                else
-                {
-                    return BadRequest("Area is not exists");
-                }
+                            select new AreaDTO()
+                            {
+                                Id = a.AreaID,
+                                AreaCode = a.AreaCode,
+                                AreaName = a.AreaName,
+                                //DistributorQty = c.DistributorID
+                            }).Where(a => a.Id == id).FirstOrDefault();
+            if (listArea != null)
+            {
+                return Json(listArea);
+            }
+            else
+            {
+                return BadRequest("Area is not exist.");
             }
         }
 
@@ -84,21 +79,19 @@ namespace Unilevel.Controllers
         [HttpPut]
         public IHttpActionResult UpdateArea(int id, AreaDTO area)
         {
-            using (var db = new UnilevelDbContext())
-            {
-                var editArea = db.Areas.Where(a => a.AreaID == id).FirstOrDefault();
+            var editArea = dbContext.Areas.Where(a => a.AreaID == id).FirstOrDefault();
 
-                if (editArea != null)
-                {
-                    editArea.AreaCode = area.AreaCode;
-                    editArea.AreaName = area.AreaName;
-                    db.SaveChanges();
-                }
-                else
-                {
-                    return BadRequest("Area is not exists !!!");
-                }
+            if (editArea != null)
+            {
+                editArea.AreaCode = area.AreaCode;
+                editArea.AreaName = area.AreaName;
+                dbContext.SaveChanges();
             }
+            else
+            {
+                return BadRequest("Area is not exists !!!");
+            }
+
             return Ok("Area has been updated successful.");
         }
 
@@ -120,6 +113,7 @@ namespace Unilevel.Controllers
                     return BadRequest("Not a valid area id");
                 }
             }
+
             return Ok("Area has been deleted successful.");
         }
     }
