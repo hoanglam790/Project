@@ -11,7 +11,7 @@ namespace Unilevel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Distributor()
         {
-            Area_Details = new HashSet<Area_Details>();
+            Area_Distributors = new HashSet<Area_Distributors>();
             Plans = new HashSet<Plan>();
         }
 
@@ -33,8 +33,10 @@ namespace Unilevel.Models
         [StringLength(11)]
         public string DistributorPhone { get; set; }
 
+        public int? AreaID { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Area_Details> Area_Details { get; set; }
+        public virtual ICollection<Area_Distributors> Area_Distributors { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Plan> Plans { get; set; }

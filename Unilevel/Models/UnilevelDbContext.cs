@@ -12,9 +12,9 @@ namespace Unilevel.Models
         {
         }
 
-        public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Area> Areas { get; set; }
-        public virtual DbSet<Area_Details> Area_Details { get; set; }
+        public virtual DbSet<Area_Distributors> Area_Distributors { get; set; }
+        public virtual DbSet<Area_Users> Area_Users { get; set; }
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
@@ -28,17 +28,17 @@ namespace Unilevel.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Area>()
-                .HasMany(e => e.Area_Details)
+                .HasMany(e => e.Area_Users)
                 .WithRequired(e => e.Area)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Area>()
-                .HasMany(e => e.Users)
+                .HasMany(e => e.Area_Distributors)
                 .WithRequired(e => e.Area)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Distributor>()
-                .HasMany(e => e.Area_Details)
+                .HasMany(e => e.Area_Distributors)
                 .WithRequired(e => e.Distributor)
                 .WillCascadeOnDelete(false);
 
@@ -76,6 +76,11 @@ namespace Unilevel.Models
             modelBuilder.Entity<Time>()
                 .HasMany(e => e.Plans)
                 .WithRequired(e => e.Time)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Area_Users)
+                .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
         }
     }

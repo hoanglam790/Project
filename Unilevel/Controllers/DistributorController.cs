@@ -58,7 +58,7 @@ namespace Unilevel.Controllers
         // POST
         [Route("api/Distributor")]
         [HttpPost]
-        public IHttpActionResult CreateNewDistributor(Distributors d)
+        public IHttpActionResult CreateNewDistributor(DistributorDTO d)
         {
             if(d.DistributorName == null)
             {
@@ -76,13 +76,28 @@ namespace Unilevel.Controllers
             {
                 return BadRequest("Distributor phone is required fields.");
             }
+            if(dbContext.Distributors.Any(n => n.DistributorEmail == d.DistributorEmail))
+            {
+                return BadRequest("Email already exist.");
+            }
+            if (dbContext.Distributors.Any(n => n.DistributorPhone == d.DistributorPhone))
+            {
+                return BadRequest("Phone number already exist.");
+            }
 
             var distributor = new Distributor();
             distributor.DistributorName = d.DistributorName;
             distributor.DistributorAddress = d.DistributorAddress;
             distributor.DistributorEmail = d.DistributorEmail;
             distributor.DistributorPhone = d.DistributorPhone;
+            distributor.AreaID = d.Area;
             dbContext.Distributors.Add(distributor);
+
+            var ct_distributor = new Area_Distributors();
+            ct_distributor.AreaID = (int)distributor.AreaID;
+            ct_distributor.DistributorID = distributor.DistributorID;
+            dbContext.Area_Distributors.Add(ct_distributor);
+
             dbContext.SaveChanges();
             return Ok("New Distributor has been created successful.");
         }
