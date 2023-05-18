@@ -117,8 +117,4 @@ namespace Unilevel.Controllers
             return Ok("Area has been deleted successful.");
         }
     }
-
-    // Add user into area
-
-    // Add distributor into area
 }
