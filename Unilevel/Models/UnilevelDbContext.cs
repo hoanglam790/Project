@@ -15,10 +15,13 @@ namespace Unilevel.Models
         public virtual DbSet<Area> Areas { get; set; }
         public virtual DbSet<Area_Distributors> Area_Distributors { get; set; }
         public virtual DbSet<Area_Users> Area_Users { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Survey> Surveys { get; set; }
+        public virtual DbSet<Survey_Details> Survey_Details { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Task_Details> Task_Details { get; set; }
@@ -36,6 +39,10 @@ namespace Unilevel.Models
                 .HasMany(e => e.Area_Distributors)
                 .WithRequired(e => e.Area)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Article>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Distributor>()
                 .HasMany(e => e.Area_Distributors)
@@ -56,16 +63,31 @@ namespace Unilevel.Models
                 .WithRequired(e => e.Role)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Task>()
-                .Property(e => e.Description)
+            modelBuilder.Entity<Survey_Details>()
+                .Property(e => e.Question)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Task>()
-                .HasMany(e => e.Task_Details)
-                .WithRequired(e => e.Task)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Survey_Details>()
+                .Property(e => e.A)
+                .IsUnicode(false);
 
-            modelBuilder.Entity<Task_Details>()
+            modelBuilder.Entity<Survey_Details>()
+                .Property(e => e.B)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Survey_Details>()
+                .Property(e => e.C)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Survey_Details>()
+                .Property(e => e.D)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Survey_Details>()
+                .Property(e => e.Result)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Task>()
                 .Property(e => e.Description)
                 .IsUnicode(false);
 
@@ -80,6 +102,11 @@ namespace Unilevel.Models
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Area_Users)
+                .WithRequired(e => e.User)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Notifications)
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
         }

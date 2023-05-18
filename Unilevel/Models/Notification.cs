@@ -12,8 +12,10 @@ namespace Unilevel.Models
         public int NotificationID { get; set; }
 
         [Required]
-        [StringLength(150)]
-        public string Sender { get; set; }
+        [StringLength(250)]
+        public string Title { get; set; }
+
+        public int UserID { get; set; }
 
         [Required]
         [StringLength(150)]
@@ -24,5 +26,9 @@ namespace Unilevel.Models
         public string Contents { get; set; }
 
         public DateTime Date { get; set; }
+
+        public int Status { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

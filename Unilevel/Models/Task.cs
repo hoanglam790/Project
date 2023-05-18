@@ -21,10 +21,6 @@ namespace Unilevel.Models
         [StringLength(250)]
         public string Title { get; set; }
 
-        [Required]
-        [StringLength(250)]
-        public string UserNameTask { get; set; }
-
         [Column(TypeName = "text")]
         [Required]
         public string Description { get; set; }
@@ -32,6 +28,8 @@ namespace Unilevel.Models
         public DateTime StartDate { get; set; }
 
         public DateTime StartEnd { get; set; }
+
+        public DateTime CreatedAt { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task_Details> Task_Details { get; set; }

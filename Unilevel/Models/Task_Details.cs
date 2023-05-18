@@ -11,13 +11,7 @@ namespace Unilevel.Models
         [Key]
         public int TaskDetailsID { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        public string Status { get; set; }
-
-        [Column(TypeName = "text")]
-        [Required]
-        public string Description { get; set; }
+        public int Status { get; set; }
 
         public int Rating { get; set; }
 
@@ -25,8 +19,12 @@ namespace Unilevel.Models
         [Required]
         public string Comment { get; set; }
 
-        public int TaskID { get; set; }
+        public int? TaskID { get; set; }
+
+        public int? UserID { get; set; }
 
         public virtual Task Task { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

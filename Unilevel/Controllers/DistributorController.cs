@@ -51,7 +51,7 @@ namespace Unilevel.Controllers
             }
             else
             {
-                return BadRequest("Distributor is not exists");
+                return BadRequest("Distributor is not exist.");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Unilevel.Controllers
             }
             else
             {
-                return BadRequest("Distributor is not exists !!!");
+                return BadRequest("Distributor is not exist !!!");
             }
 
             return Ok("Distributor has been updated successful.");

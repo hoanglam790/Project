@@ -16,7 +16,6 @@ namespace Unilevel.Models
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-
         public int UserID { get; set; }
 
         public virtual Area Area { get; set; }
