@@ -11,27 +11,22 @@ namespace Unilevel.Models
         [Key]
         public int SurveyDetailsID { get; set; }
 
-        [Column(TypeName = "text")]
         [Required]
         public string Question { get; set; }
 
-        [Column(TypeName = "text")]
         [Required]
         public string A { get; set; }
 
-        [Column(TypeName = "text")]
         [Required]
         public string B { get; set; }
 
-        [Column(TypeName = "text")]
         [Required]
         public string C { get; set; }
 
-        [Column(TypeName = "text")]
         [Required]
         public string D { get; set; }
 
-        [StringLength(10)]
+        [StringLength(50)]
         public string Result { get; set; }
 
         public DateTime StartDate { get; set; }

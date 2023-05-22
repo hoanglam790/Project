@@ -15,7 +15,7 @@ namespace Unilevel.DTO
         public string Result { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int SurveyId { get; set; }
+        public int Survey { get; set; }
         public int Creator { get; set; }
     }
 }

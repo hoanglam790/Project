@@ -63,30 +63,6 @@ namespace Unilevel.Models
                 .WithRequired(e => e.Role)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Survey_Details>()
-                .Property(e => e.Question)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Survey_Details>()
-                .Property(e => e.A)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Survey_Details>()
-                .Property(e => e.B)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Survey_Details>()
-                .Property(e => e.C)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Survey_Details>()
-                .Property(e => e.D)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Survey_Details>()
-                .Property(e => e.Result)
-                .IsFixedLength();
-
             modelBuilder.Entity<Task>()
                 .Property(e => e.Description)
                 .IsUnicode(false);

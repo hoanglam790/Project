@@ -112,11 +112,37 @@ namespace Unilevel.Controllers
             survey_question.Result = survey.Result;
             survey_question.StartDate = DateTime.Now;
             survey_question.EndDate = survey.EndDate;
-            survey_question.SurveyID = survey.SurveyId;
+            survey_question.SurveyID = survey.Survey;
             survey_question.UserID = survey.Creator;
             dbContext.Survey_Details.Add(survey_question);
             dbContext.SaveChanges();
             return Ok("Survey question detail has been created successful.");
+        }
+
+        // Update survey question
+        [Route("api/Survey-Question-Detail/{id}")]
+        [HttpPut]
+        public IHttpActionResult UpdateSurveyQuestionDetail(int id, Survey_Question_Details survey)
+        {
+            var editQuestion = dbContext.Survey_Details.Where(d => d.SurveyDetailsID == id).FirstOrDefault();
+            if(editQuestion != null)
+            {
+                editQuestion.Question = survey.Question;
+                editQuestion.A = survey.Answer_A;
+                editQuestion.B = survey.Answer_B;
+                editQuestion.C = survey.Answer_C;
+                editQuestion.D = survey.Answer_D;
+                editQuestion.StartDate = DateTime.Now;
+                editQuestion.EndDate = survey.EndDate;
+                editQuestion.SurveyID = survey.Survey;
+                editQuestion.UserID = survey.Creator;
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                return BadRequest("Survey is not exist.");
+            }
+            return Ok("Survey question detail has been updated successful.");
         }
     }
 }
